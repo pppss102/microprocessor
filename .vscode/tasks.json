@@ -10,7 +10,7 @@
                 "${workspaceFolder}/*.cpp",
                 "${workspaceFolder}/*.h",
                 "-o",
-                "${fileDirname}\\${fileBasenameNoExtension}.exe"
+                "${fileDirname}\\Program\\MicroProcessor compiler.exe"
             ],
             "options": {
                 "cwd": "c:\\msys64\\ucrt64\\bin"
