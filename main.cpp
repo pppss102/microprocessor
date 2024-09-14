@@ -7,7 +7,7 @@
 
 int main()
 {
-    /*ProcessorLanguageInterpreter code;
+    ProcessorLanguageInterpreter code;
 
     code.AddLine("0;  B = Din");
     code.AddLine("1;  c = din");
@@ -55,9 +55,12 @@ int main()
     code.AddLine("43; A = E; NEXT: 45");
     code.AddLine("44; A = not E");
     code.AddLine("45; E = A");
-    code.AddLine("46; done");*/
+    code.AddLine("46; done");
 
-    //code.PrintToConsole();
+    code.PrintToConsole();
+
+    std::string ending;
+    std::cin >> ending;
 
     return 0;
 }
