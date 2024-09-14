@@ -9,10 +9,9 @@
 int main()
 {
     std::vector<std::string> txtFiles = FindAllTxtFiles();
-    std::vector<std::string> lines = ReadFileContents(txtFiles[0]);
-    for (int i = 0; i < lines.size(); i++)
-    {
-        std::cout << i << ": " << lines[i] << '\n';
+    for(const std::string& filePath : txtFiles){
+        ProcessorLanguageInterpreter compiler;
+        compiler.CompileCode(filePath);
     }
 
     // ProcessorLanguageInterpreter code;
@@ -67,6 +66,7 @@ int main()
 
     // code.PrintToConsole();
 
+    std::cout << "Done: ";
     std::string ending;
     std::cin >> ending;
 

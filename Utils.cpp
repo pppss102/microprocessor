@@ -67,6 +67,7 @@ std::vector<std::string> ReadFileContents(const std::string filePath)
 		std::getline(fileInput, line);
 		contents.push_back(line);
 	}
+	fileInput.close();
 	contents.pop_back();
 	return contents;
 }
