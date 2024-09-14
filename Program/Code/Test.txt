@@ -1,4 +1,4 @@
-0;  B = Din
+0;  B = Din; --Comment example
 1;  c = din
 2;  D,E = Din
 3;  A = B + 1
