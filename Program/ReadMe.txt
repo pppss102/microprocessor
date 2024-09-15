@@ -12,6 +12,8 @@ example code and result has been provided
 
 syntax
 
+Define the type of the Processor at the start of the file, N for natural, F for forced
+
 you must write the line of each line of code at the start
 comment by putting ;--Comment anywhere in the line(Compiler removes spaces and makes everything capitalized because I'm lazy and fuck you)
 To do multiple things in a single line separate the functions by ;

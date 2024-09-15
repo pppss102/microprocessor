@@ -327,6 +327,7 @@ class ForcedLineStatement
 		}
 		if (part.find("LS") != std::string::npos)
 		{
+			IsFlag = true;
 			FlagFunction(part);
 			return;
 		}
@@ -357,9 +358,11 @@ class ForcedLineStatement
 	}
 
 public:
+	Modules::Processor type{};
 	int lineNr{-1};
 	int nextLineNr{-1};
 	std::string lineName{};
+	bool IsFlag{};
 	bool MUX[7]{};
 	bool A[7]{};
 	bool B[7]{};
@@ -374,8 +377,9 @@ public:
 	bool Flag[4]{};
 	bool Adress[8]{};
 	std::string Comment{};
-	ForcedLineStatement(std::string line)
+	ForcedLineStatement(std::string line, Modules::Processor type)
 	{
+		this->type = type;
 		std::transform(line.begin(), line.end(), line.begin(), ::toupper);
 		line.erase(std::remove(line.begin(), line.end(), ' '), line.end());
 		std::vector<std::string> parts = split(line, ";");
@@ -391,19 +395,46 @@ public:
 	std::string ToString() const
 	{
 		std::string rez = std::to_string(lineNr) + "=> \"";
-		rez += BoolArrayToString(MUX, 7);
-		rez += BoolArrayToString(A, 7);
-		rez += BoolArrayToString(B, 7);
-		rez += BoolArrayToString(C, 7);
-		rez += BoolArrayToString(D, 7);
-		rez += BoolArrayToString(E, 7);
-		rez += BoolArrayToString(F, 7);
-		rez += BoolArrayToString(ALU, 8);
-		rez += BoolArrayToString(Reset, 9);
-		rez += std::to_string(DataOut);
-		rez += std::to_string(CNT);
-		rez += BoolArrayToString(Flag, 4);
-		rez += BoolArrayToString(Adress, 8);
+		if (type == Modules::Processor::Forced)
+		{
+			rez += BoolArrayToString(MUX, 7);
+			rez += BoolArrayToString(A, 7);
+			rez += BoolArrayToString(B, 7);
+			rez += BoolArrayToString(C, 7);
+			rez += BoolArrayToString(D, 7);
+			rez += BoolArrayToString(E, 7);
+			rez += BoolArrayToString(F, 7);
+			rez += BoolArrayToString(ALU, 8);
+			rez += BoolArrayToString(Reset, 9);
+			rez += std::to_string(DataOut);
+			rez += std::to_string(CNT);
+			rez += BoolArrayToString(Flag, 4);
+			rez += BoolArrayToString(Adress, 8);
+		}
+		else if (type == Modules::Processor::Natural)
+		{
+			rez += std::to_string(IsFlag);
+			if (IsFlag)
+			{
+				rez += BoolArrayToString(Flag, 4);
+				rez += BoolArrayToString(Adress, 8);
+				rez += "00";
+			}
+			else
+			{
+				rez += BoolArrayToString(MUX, 7);
+				rez += BoolArrayToString(A, 7);
+			}
+			rez += BoolArrayToString(B, 7);
+			rez += BoolArrayToString(C, 7);
+			rez += BoolArrayToString(D, 7);
+			rez += BoolArrayToString(E, 7);
+			rez += BoolArrayToString(F, 7);
+			rez += BoolArrayToString(ALU, 8);
+			rez += BoolArrayToString(Reset, 9);
+			rez += std::to_string(DataOut);
+			rez += std::to_string(CNT);
+		}
 		rez += "\", " + Comment;
 		return rez;
 	}

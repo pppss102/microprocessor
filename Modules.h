@@ -2,6 +2,11 @@
 
 namespace Modules
 {
+	enum class Processor
+	{
+		Forced,
+		Natural
+	};
 	enum class Register
 	{
 		S_Data,

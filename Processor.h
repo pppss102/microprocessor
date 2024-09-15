@@ -19,9 +19,9 @@ public:
 	ProcessorLanguageInterpreter()
 	{
 	}
-	void AddLine(const std::string &line)
+	void AddLine(const std::string &line, Modules::Processor type)
 	{
-		ForcedLineStatement newLine(line);
+		ForcedLineStatement newLine(line, type);
 		lines.push_back(newLine);
 	}
 	void PrintToConsole()
@@ -34,13 +34,23 @@ public:
 	void CompileCode(const std::string &codePath_s)
 	{
 		std::vector<std::string> code = ReadFileContents(codePath_s);
-		for (const std::string &line : code)
+		Modules::Processor processorType{};
+		if (code[0] == "F")
 		{
-			AddLine(line);
+			processorType = Modules::Processor::Forced;
+		}
+		else
+		{
+			processorType = Modules::Processor::Natural;
+		}
+		for (int i = 1; i < code.size(); i++)
+		{
+			AddLine(code[i], processorType);
 		}
 		std::filesystem::path codePath(codePath_s);
-		std::ofstream outputPath("Rezult/Compiled_" + codePath.filename().string());
-		for(const ForcedLineStatement& line : lines){
+		std::ofstream outputPath("Rezult/Compiled_" + code[0] + "_" + codePath.filename().string());
+		for (const ForcedLineStatement &line : lines)
+		{
 			outputPath << line.ToString() << '\n';
 		}
 		outputPath.close();
