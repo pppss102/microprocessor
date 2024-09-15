@@ -57,7 +57,8 @@ You can define the next line by adding NEXT: lineNr anywhere in your code, for e
 
 By default the next line will be current Line + 1
 
-If flag is false it will go to the default next line, otherwise it will go to the next line + 1 on a forced processor
+In case of Natural processor if flag is true it will go to the next line by default, if flag is false it will go to the programmer defined next line
+In case of Forced processor if flag is false it will go to the default next line, otherwise it will go to the defined next line + 1
 
 ==========Resetting==========
 
