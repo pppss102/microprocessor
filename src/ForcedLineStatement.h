@@ -43,7 +43,7 @@ class ForcedLineStatement {
         std::vector<std::string> BothSides = split(part, "=");
         if (BothSides[0].find('A') != std::string::npos &&
             BothSides[0].length() > 1) {
-            std::cout << "Tried to assign A and something else\n";
+            std::cout << "Tried to assign A and something else";
             return;
         }
 
@@ -293,6 +293,8 @@ class ForcedLineStatement {
     std::string Comment{};
     ForcedLineStatement(std::string line, Modules::Processor type) {
         this->type = type;
+        // std::transform(line.begin(), line.end(), line.begin(), ::toupper);
+        // line.erase(std::remove(line.begin(), line.end(), ' '), line.end());
         std::vector<std::string> parts = split(line, ";");
         for (std::string part : parts) {
             part = part.substr(part.find_first_not_of(" "));
