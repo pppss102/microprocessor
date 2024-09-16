@@ -1,4 +1,6 @@
-Use instructions:
+# KTU Microprocessor pseudocode compiler
+
+## Use instructions
 
 1. Keep all your code as .txt files in the code folder, make sure to save them
 
@@ -10,7 +12,7 @@ Use instructions:
 
 example code and result has been provided
 
-syntax
+## syntax
 
 Define the type of the Processor at the start of the file, N for natural, F for forced
 
@@ -22,7 +24,7 @@ Do not put ; at the end of the line
 
 code is case insensitive
 
-==========Register operations===========
+### ==========Register operations===========
 
 For registers B-F assign by just stating the register, for example
 B = A
@@ -42,14 +44,14 @@ CL1(A, B, C, d)
 
 awailabale shifts LL1, LR1, AL1, AR1, CL1, CR1
 
-==========Flags==========
+### ==========Flags==========
 
 Use flags using LS(flag)
 LS(AH) example
 
 awailable flags: AH, AL, BH, BL, CH, CL, DH, DL, EH, EL, FH, FL, CNT (True if CNT = 0), ALU, 0 (for False)
 
-==========Sequencing==========
+### ==========Sequencing==========
 
 You can define the next line by adding NEXT: lineNr anywhere in your code, for example:
 
@@ -60,7 +62,7 @@ By default the next line will be current Line + 1
 In case of Natural processor if flag is true it will go to the next line by default, if flag is false it will go to the programmer defined next line
 In case of Forced processor if flag is false it will go to the default next line, otherwise it will go to the defined next line + 1
 
-==========Resetting==========
+### ==========Resetting==========
 
 you can reset using RST, the same rules apply as for shifting
 
