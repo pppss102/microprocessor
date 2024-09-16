@@ -97,35 +97,6 @@ class ForcedLineStatement {
         for (std::string const& currentReset : Resets) {
             Reset[resetMap.at(currentReset)] = 1;
         }
-
-        // if (std::find(Resets.begin(), Resets.end(), "A") != Resets.end()) {
-        //     Reset[(int)Modules::RST::RegA] = 1;
-        // }
-        // if (std::find(Resets.begin(), Resets.end(), "B") != Resets.end()) {
-        //     Reset[(int)Modules::RST::RegB] = 1;
-        // }
-        // if (std::find(Resets.begin(), Resets.end(), "C") != Resets.end()) {
-        //     Reset[(int)Modules::RST::RegC] = 1;
-        // }
-        // if (std::find(Resets.begin(), Resets.end(), "D") != Resets.end()) {
-        //     Reset[(int)Modules::RST::RegD] = 1;
-        // }
-        // if (std::find(Resets.begin(), Resets.end(), "E") != Resets.end()) {
-        //     Reset[(int)Modules::RST::RegE] = 1;
-        // }
-        // if (std::find(Resets.begin(), Resets.end(), "F") != Resets.end()) {
-        //     Reset[(int)Modules::RST::RegF] = 1;
-        // }
-        // if (std::find(Resets.begin(), Resets.end(), "CNT") != Resets.end()) {
-        //     Reset[(int)Modules::RST::CNT] = 1;
-        // }
-        // if (std::find(Resets.begin(), Resets.end(), "ROM") != Resets.end()) {
-        //     Reset[(int)Modules::RST::ROM] = 1;
-        // }
-        // if (std::find(Resets.begin(), Resets.end(), "FLAG") != Resets.end())
-        // {
-        //     Reset[(int)Modules::RST::Flag] = 1;
-        // }
     }
     void FlagFunction(std::string const& part) {
         std::map<std::string, int> const flags{
