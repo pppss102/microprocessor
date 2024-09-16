@@ -41,7 +41,7 @@ class ForcedLineStatement {
         ALU[(int)Modules::ALU::LpR] = 1;
     }
     void AssignFunction(std::string const& part) {
-        std::vector<std::string> BothSides = split(part, "=");
+        std::vector<std::string> BothSides = Utils::split(part, "=");
         if (BothSides[0].find('A') != std::string::npos &&
             BothSides[0].length() > 1) {
             std::cout << "Tried to assign A and something else";
@@ -85,7 +85,7 @@ class ForcedLineStatement {
     }
     void ResetFunction(std::string const& part) {
         std::vector<std::string> Resets =
-            split(part.substr(4, part.length() - 5), ",");
+            Utils::split(part.substr(4, part.length() - 5), ",");
         if (std::find(Resets.begin(), Resets.end(), "A") != Resets.end()) {
             Reset[(int)Modules::RST::RegA] = 1;
         }
@@ -127,7 +127,7 @@ class ForcedLineStatement {
 
         std::string token = part.substr(3, part.length() - 4);
 
-        AssignIntToBoolArray(Flag, 4, flags.at(token));
+        Utils::AssignIntToBoolArray(Flag, 4, flags.at(token));
     }
     void ShiftFunction(std::string const& part) {
         int shiftAssign = 0;
@@ -143,7 +143,7 @@ class ForcedLineStatement {
         shiftAssign = shifts.at(part.substr(0, 3));
 
         std::vector<std::string> registers =
-            split(part.substr(4, part.length() - 5), ",");
+            Utils::split(part.substr(4, part.length() - 5), ",");
         if (std::find(registers.begin(), registers.end(), "A") !=
             registers.end()) {
             A[shiftAssign] = 1;
@@ -174,7 +174,7 @@ class ForcedLineStatement {
         std::string number_string = part.substr(5);
         int number = std::stoi(number_string);
         nextLineNr = number;
-        AssignIntToBoolArray(Adress, 8, number);
+        Utils::AssignIntToBoolArray(Adress, 8, number);
     }
     void ThisLineFunction(std::string const& part) {
         int number = std::stoi(part);
@@ -209,7 +209,7 @@ class ForcedLineStatement {
         }
         if (part.find("DONE") != std::string::npos) {
             DataOut = 1;
-            AssignIntToBoolArray(Adress, 8, lineNr);
+            Utils::AssignIntToBoolArray(Adress, 8, lineNr);
             nextLineNr = lineNr;
             return;
         }
@@ -244,9 +244,7 @@ class ForcedLineStatement {
     std::string Comment{};
     ForcedLineStatement(std::string line, Modules::Processor type) {
         this->type = type;
-        // std::transform(line.begin(), line.end(), line.begin(), ::toupper);
-        // line.erase(std::remove(line.begin(), line.end(), ' '), line.end());
-        std::vector<std::string> parts = split(line, ";");
+        std::vector<std::string> parts = Utils::split(line, ";");
         for (std::string part : parts) {
             part = part.substr(part.find_first_not_of(" "));
             if (part.substr(0, 2) != "--") {
@@ -258,42 +256,42 @@ class ForcedLineStatement {
             PartInterpreter(part);
         }
         if (nextLineNr < 0) {
-            AssignIntToBoolArray(Adress, 8, lineNr + 1);
+            Utils::AssignIntToBoolArray(Adress, 8, lineNr + 1);
         }
     }
     std::string ToString() const {
         std::string rez = std::to_string(lineNr) + "=> \"";
         if (type == Modules::Processor::Forced) {
-            rez += BoolArrayToString(MUX, 7);
-            rez += BoolArrayToString(A, 7);
-            rez += BoolArrayToString(B, 7);
-            rez += BoolArrayToString(C, 7);
-            rez += BoolArrayToString(D, 7);
-            rez += BoolArrayToString(E, 7);
-            rez += BoolArrayToString(F, 7);
-            rez += BoolArrayToString(ALU, 8);
-            rez += BoolArrayToString(Reset, 9);
+            rez += Utils::BoolArrayToString(MUX, 7);
+            rez += Utils::BoolArrayToString(A, 7);
+            rez += Utils::BoolArrayToString(B, 7);
+            rez += Utils::BoolArrayToString(C, 7);
+            rez += Utils::BoolArrayToString(D, 7);
+            rez += Utils::BoolArrayToString(E, 7);
+            rez += Utils::BoolArrayToString(F, 7);
+            rez += Utils::BoolArrayToString(ALU, 8);
+            rez += Utils::BoolArrayToString(Reset, 9);
             rez += std::to_string(DataOut);
             rez += std::to_string(CNT);
-            rez += BoolArrayToString(Flag, 4);
-            rez += BoolArrayToString(Adress, 8);
+            rez += Utils::BoolArrayToString(Flag, 4);
+            rez += Utils::BoolArrayToString(Adress, 8);
         } else if (type == Modules::Processor::Natural) {
             rez += std::to_string(IsFlag);
             if (IsFlag) {
-                rez += BoolArrayToString(Flag, 4);
-                rez += BoolArrayToString(Adress, 8);
+                rez += Utils::BoolArrayToString(Flag, 4);
+                rez += Utils::BoolArrayToString(Adress, 8);
                 rez += "00";
             } else {
-                rez += BoolArrayToString(MUX, 7);
-                rez += BoolArrayToString(A, 7);
+                rez += Utils::BoolArrayToString(MUX, 7);
+                rez += Utils::BoolArrayToString(A, 7);
             }
-            rez += BoolArrayToString(B, 7);
-            rez += BoolArrayToString(C, 7);
-            rez += BoolArrayToString(D, 7);
-            rez += BoolArrayToString(E, 7);
-            rez += BoolArrayToString(F, 7);
-            rez += BoolArrayToString(ALU, 8);
-            rez += BoolArrayToString(Reset, 9);
+            rez += Utils::BoolArrayToString(B, 7);
+            rez += Utils::BoolArrayToString(C, 7);
+            rez += Utils::BoolArrayToString(D, 7);
+            rez += Utils::BoolArrayToString(E, 7);
+            rez += Utils::BoolArrayToString(F, 7);
+            rez += Utils::BoolArrayToString(ALU, 8);
+            rez += Utils::BoolArrayToString(Reset, 9);
             rez += std::to_string(DataOut);
             rez += std::to_string(CNT);
         }
