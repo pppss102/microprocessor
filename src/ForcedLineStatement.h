@@ -43,7 +43,7 @@ class ForcedLineStatement {
         std::vector<std::string> BothSides = Utils::split(part, "=");
         if (BothSides[0].find('A') != std::string::npos &&
             BothSides[0].length() > 1) {
-            std::cout << "Tried to assign A and something else";
+            std::cout << "Tried to assign A and something else\n";
             return;
         }
 
@@ -231,6 +231,10 @@ class ForcedLineStatement {
     }
 
     void PartInterpreter(std::string const& part) {
+        if (part.substr(0, 2) == "--") {
+            AssignComment(part);
+            return;
+        }
         if (part.find("=") != std::string::npos) {
             AssignFunction(part);
             return;
@@ -256,10 +260,6 @@ class ForcedLineStatement {
             DataOut = 1;
             Utils::AssignIntToBoolArray(Adress, 8, lineNr);
             nextLineNr = lineNr;
-            return;
-        }
-        if (part.substr(0, 2) == "--") {
-            AssignComment(part);
             return;
         }
         std::string shiftCheck = part.substr(0, 3);
@@ -297,6 +297,13 @@ class ForcedLineStatement {
         line.erase(std::remove(line.begin(), line.end(), ' '), line.end());
         std::vector<std::string> parts = Utils::split(line, ";");
         for (std::string part : parts) {
+            part = part.substr(part.find_first_not_of(" "));
+            if (part.substr(0, 2) != "--") {
+                std::transform(part.begin(), part.end(), part.begin(),
+                               ::toupper);
+                part.erase(std::remove(part.begin(), part.end(), ' '),
+                           part.end());
+            }
             PartInterpreter(part);
         }
         if (nextLineNr < 0) {
