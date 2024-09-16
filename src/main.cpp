@@ -15,7 +15,7 @@ int main()
         compiler.CompileCode(filePath);
     }
 
-    std::cout << "Done: ";
+    std::cout << "Test Done: ";
     std::string ending;
     std::cin >> ending;
 
