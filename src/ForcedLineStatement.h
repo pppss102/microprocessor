@@ -3,6 +3,7 @@
 #include "Utils.h"
 #include <algorithm>
 #include <iostream>
+#include <map>
 #include <string>
 #include <vector>
 
@@ -43,7 +44,7 @@ class ForcedLineStatement {
         std::vector<std::string> BothSides = Utils::split(part, "=");
         if (BothSides[0].find('A') != std::string::npos &&
             BothSides[0].length() > 1) {
-            std::cout << "Tried to assign A and something else\n";
+            std::cout << "Tried to assign A and something else";
             return;
         }
 
@@ -114,83 +115,33 @@ class ForcedLineStatement {
         }
     }
     void FlagFunction(std::string const& part) {
-        if (part.find("0") != std::string::npos) {
-            Utils::AssignIntToBoolArray(Flag, 4, (int)Modules::Flag::FALSE);
-            return;
-        }
-        if (part.find("CNT") != std::string::npos) {
-            Utils::AssignIntToBoolArray(Flag, 4, (int)Modules::Flag::CNT);
-            return;
-        }
-        if (part.find("AH") != std::string::npos) {
-            Utils::AssignIntToBoolArray(Flag, 4, (int)Modules::Flag::AH);
-            return;
-        }
-        if (part.find("AL") != std::string::npos) {
-            Utils::AssignIntToBoolArray(Flag, 4, (int)Modules::Flag::AL);
-            return;
-        }
-        if (part.find("BH") != std::string::npos) {
-            Utils::AssignIntToBoolArray(Flag, 4, (int)Modules::Flag::BH);
-            return;
-        }
-        if (part.find("BL") != std::string::npos) {
-            Utils::AssignIntToBoolArray(Flag, 4, (int)Modules::Flag::BL);
-            return;
-        }
-        if (part.find("CH") != std::string::npos) {
-            Utils::AssignIntToBoolArray(Flag, 4, (int)Modules::Flag::CH);
-            return;
-        }
-        if (part.find("CL") != std::string::npos) {
-            Utils::AssignIntToBoolArray(Flag, 4, (int)Modules::Flag::CL);
-            return;
-        }
-        if (part.find("DH") != std::string::npos) {
-            Utils::AssignIntToBoolArray(Flag, 4, (int)Modules::Flag::DH);
-            return;
-        }
-        if (part.find("DL") != std::string::npos) {
-            Utils::AssignIntToBoolArray(Flag, 4, (int)Modules::Flag::DL);
-            return;
-        }
-        if (part.find("EH") != std::string::npos) {
-            Utils::AssignIntToBoolArray(Flag, 4, (int)Modules::Flag::EH);
-            return;
-        }
-        if (part.find("EL") != std::string::npos) {
-            Utils::AssignIntToBoolArray(Flag, 4, (int)Modules::Flag::EL);
-            return;
-        }
-        if (part.find("FH") != std::string::npos) {
-            Utils::AssignIntToBoolArray(Flag, 4, (int)Modules::Flag::FH);
-            return;
-        }
-        if (part.find("FL") != std::string::npos) {
-            Utils::AssignIntToBoolArray(Flag, 4, (int)Modules::Flag::FL);
-            return;
-        }
-        if (part.find("ALU") != std::string::npos) {
-            Utils::AssignIntToBoolArray(Flag, 4, (int)Modules::Flag::ALU);
-            return;
-        }
+        std::map<std::string, int> const flags{
+            {"0", (int)Modules::Flag::FALSE}, {"CNT", (int)Modules::Flag::CNT},
+            {"AH", (int)Modules::Flag::AH},   {"AL", (int)Modules::Flag::AL},
+            {"BH", (int)Modules::Flag::BH},   {"BL", (int)Modules::Flag::BL},
+            {"CH", (int)Modules::Flag::CH},   {"CL", (int)Modules::Flag::CL},
+            {"DH", (int)Modules::Flag::DH},   {"DL", (int)Modules::Flag::DL},
+            {"EH", (int)Modules::Flag::EH},   {"EL", (int)Modules::Flag::EL},
+            {"FH", (int)Modules::Flag::FH},   {"FL", (int)Modules::Flag::FL},
+            {"ALU", (int)Modules::Flag::ALU}};
+
+        std::string token = part.substr(3, part.length() - 4);
+
+        Utils::AssignIntToBoolArray(Flag, 4, flags.at(token));
     }
     void ShiftFunction(std::string const& part) {
         int shiftAssign = 0;
         std::string shift = part.substr(0, 3);
-        if (shift == "LL1") {
-            shiftAssign = (int)Modules::Register::LL1;
-        } else if (shift == "LR1") {
-            shiftAssign = (int)Modules::Register::LR1;
-        } else if (shift == "AL1") {
-            shiftAssign = (int)Modules::Register::AL1;
-        } else if (shift == "AR1") {
-            shiftAssign = (int)Modules::Register::AR1;
-        } else if (shift == "CL1") {
-            shiftAssign = (int)Modules::Register::CL1;
-        } else if (shift == "CR1") {
-            shiftAssign = (int)Modules::Register::CR1;
-        }
+
+        std::map<std::string, int> const shifts{
+            {"LL1", (int)Modules::Register::LL1},
+            {"LR1", (int)Modules::Register::LR1},
+            {"AL1", (int)Modules::Register::AL1},
+            {"AR1", (int)Modules::Register::AR1},
+            {"CL1", (int)Modules::Register::CL1},
+            {"CR1", (int)Modules::Register::CR1}};
+        shiftAssign = shifts.at(part.substr(0, 3));
+
         std::vector<std::string> registers =
             Utils::split(part.substr(4, part.length() - 5), ",");
         if (std::find(registers.begin(), registers.end(), "A") !=
@@ -293,8 +244,6 @@ class ForcedLineStatement {
     std::string Comment{};
     ForcedLineStatement(std::string line, Modules::Processor type) {
         this->type = type;
-        std::transform(line.begin(), line.end(), line.begin(), ::toupper);
-        line.erase(std::remove(line.begin(), line.end(), ' '), line.end());
         std::vector<std::string> parts = Utils::split(line, ";");
         for (std::string part : parts) {
             part = part.substr(part.find_first_not_of(" "));
