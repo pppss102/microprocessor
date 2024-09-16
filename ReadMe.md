@@ -13,11 +13,11 @@ example code and result has been provided
 
 Define the type of the Processor at the start of the file, N for natural, F for forced
 
-you must write the line of each line of code at the start
-comment by putting ;--Comment anywhere in the line
-To do multiple things in a single line separate the functions by ;
-Do not put ; at the end of the line
-`12; LL1(E); CL1(F); --Shift E Left, F Cyclicly`
+- you must write the line of each line of code at the start
+- comment by putting ;--Comment anywhere in the line
+- To do multiple things in a single line separate the functions by ;
+- Do not put ; at the end of the line
+- `12; LL1(E); CL1(F); --Shift E Left, F Cyclicly`
 
 code is case insensitive
 
@@ -27,14 +27,14 @@ For registers B-F assign by just stating the register, for example
 `B = A`
 
 A can only be assigned trough operations:
-`A = A + B`
-`A = not A`
-`A = not B`
-`A = A + 1`
-`A = A - 1`
-`A = B + 1`
-`A = B - 1`
-`A = A xor B`
+- `A = A + B`
+- `A = not A`
+- `A = not B`
+- `A = A + 1`
+- `A = A - 1`
+- `A = B + 1`
+- `A = B - 1`
+- `A = A xor B`
 
 to do register shifts type the name of the shift, brackets, and separate the registers by commas, example:
 `CL1(A, B, C, d)`
