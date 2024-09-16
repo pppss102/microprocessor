@@ -15,7 +15,7 @@ syntax
 Define the type of the Processor at the start of the file, N for natural, F for forced
 
 you must write the line of each line of code at the start
-comment by putting ;--Comment anywhere in the line(Compiler removes spaces and makes everything capitalized because I'm lazy and fuck you)
+comment by putting ;--Comment anywhere in the line
 To do multiple things in a single line separate the functions by ;
 Do not put ; at the end of the line
 12; LL1(E); CL1(F); --Shift E Left, F Cyclicly
@@ -28,7 +28,7 @@ For registers B-F assign by just stating the register, for example
 B = A
 
 A can only be assigned trough operations:
-A = A + B (You can't do A = A + A because fuck you)
+A = A + B
 A = not A
 A = not B
 A = A + 1

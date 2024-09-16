@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <filesystem>
 #include <fstream>
+#include <iostream>
 #include <string>
 #include <vector>
 
@@ -34,6 +35,7 @@ class ProcessorLanguageInterpreter {
             processorType = Modules::Processor::Natural;
         }
         for (int i = 1; i < code.size(); i++) {
+            std::cout << code[i] << '\n';
             AddLine(code[i], processorType);
         }
         std::filesystem::path codePath(codePath_s);
