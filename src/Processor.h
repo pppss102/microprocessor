@@ -26,7 +26,7 @@ class ProcessorLanguageInterpreter {
         }
     }
     void CompileCode(std::string const& codePath_s) {
-        std::vector<std::string> code = ReadFileContents(codePath_s);
+        std::vector<std::string> code = Utils::ReadFileContents(codePath_s);
         Modules::Processor processorType{};
         if (code[0] == "F") {
             processorType = Modules::Processor::Forced;

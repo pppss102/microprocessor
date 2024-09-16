@@ -6,7 +6,7 @@
 #include <vector>
 
 int main() {
-    std::vector<std::string> txtFiles = FindAllTxtFiles();
+    std::vector<std::string> txtFiles = Utils::FindAllTxtFiles();
     for (std::string const& filePath : txtFiles) {
         ProcessorLanguageInterpreter compiler;
         compiler.CompileCode(filePath);

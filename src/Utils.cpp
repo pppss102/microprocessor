@@ -1,11 +1,12 @@
+#include "Utils.h"
 #include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <string>
 #include <vector>
 
-std::vector<std::string> split(std::string const& line,
-                               std::string const& delimeter) {
+std::vector<std::string> Utils::split(std::string const& line,
+                                      std::string const& delimeter) {
     std::vector<std::string> parts = {};
 
     std::size_t pos = line.find(delimeter);
@@ -22,7 +23,7 @@ std::vector<std::string> split(std::string const& line,
     return parts;
 }
 
-std::string BoolArrayToString(bool const arr[], int length) {
+std::string Utils::BoolArrayToString(bool const arr[], int length) {
     std::string result = "";
     for (int i = 0; i < length; i++) {
         result += std::to_string(arr[i]);
@@ -30,14 +31,14 @@ std::string BoolArrayToString(bool const arr[], int length) {
     return result;
 }
 
-void AssignIntToBoolArray(bool arr[], int length, int number) {
+void Utils::AssignIntToBoolArray(bool arr[], int length, int number) {
     for (int i = length - 1; i >= 0; i--) {
         arr[i] = number % 2;
         number /= 2;
     }
 }
 
-std::vector<std::string> FindAllTxtFiles() {
+std::vector<std::string> Utils::FindAllTxtFiles() {
     using namespace std::filesystem;
     path CompilePath = current_path() /= "Code";
     std::vector<std::string> txtPaths(0);
@@ -49,7 +50,7 @@ std::vector<std::string> FindAllTxtFiles() {
     return txtPaths;
 }
 
-std::vector<std::string> ReadFileContents(std::string const filePath) {
+std::vector<std::string> Utils::ReadFileContents(std::string const filePath) {
     std::vector<std::string> contents(0);
     std::ifstream fileInput(filePath);
     while (fileInput) {
