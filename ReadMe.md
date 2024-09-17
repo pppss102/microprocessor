@@ -2,12 +2,8 @@
 
 ## Use instructions
 
-1. Keep all your code as .txt files in the code folder, make sure to save them
-2. Launch the Compiler, it's basic and won't cover for your mistakes
-3. So far the compiler only works for Forced type microprocessor
-4. The code will get compiled to the rezults folder as a new file that's named accordingly to yours
-
-example code and result has been provided
+Provide input path and output directory as command-line arguments:
+- `Compiler.exe Test.txt OutputDirectory`
 
 ## syntax
 
@@ -15,7 +11,7 @@ Define the type of the Processor at the start of the file, N for natural, F for 
 
 - you must write the line of each line of code at the start
 - comment by putting ;--Comment anywhere in the line
-- To do multiple things in a single line separate the functions by ;
+- To do multiple things in a single line, separate the functions by ;
 - Do not put ; at the end of the line
 - `12; LL1(E); CL1(F); --Shift E Left, F Cyclicly`
 
@@ -26,7 +22,7 @@ code is case insensitive
 For registers B-F assign by just stating the register, for example
 `B = A`
 
-A can only be assigned trough operations:
+A can only be assigned through operations:
 - `A = A + B`
 - `A = not A`
 - `A = not B`
