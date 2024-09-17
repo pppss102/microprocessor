@@ -38,18 +38,6 @@ void Utils::AssignIntToBoolArray(bool arr[], int length, int number) {
     }
 }
 
-std::vector<std::string> Utils::FindAllTxtFiles() {
-    using namespace std::filesystem;
-    path CompilePath = current_path() /= "Code";
-    std::vector<std::string> txtPaths(0);
-    for (auto const& txtPath : directory_iterator(CompilePath)) {
-        if (txtPath.is_regular_file() && txtPath.path().extension() == ".txt") {
-            txtPaths.push_back(txtPath.path().string());
-        }
-    }
-    return txtPaths;
-}
-
 std::vector<std::string> Utils::ReadFileContents(std::string const filePath) {
     std::vector<std::string> contents(0);
     std::ifstream fileInput(filePath);

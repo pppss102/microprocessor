@@ -26,7 +26,8 @@ class ProcessorLanguageInterpreter {
             std::cout << line.ToString() << '\n';
         }
     }
-    void CompileCode(std::string const& codePath_s) {
+    void CompileCode(std::string const& codePath_s,
+                     std::string const& outputDirectory) {
         std::vector<std::string> code = Utils::ReadFileContents(codePath_s);
         Modules::Processor processorType{};
         if (code[0] == "F") {
@@ -39,8 +40,8 @@ class ProcessorLanguageInterpreter {
             AddLine(code[i], processorType);
         }
         std::filesystem::path codePath(codePath_s);
-        std::ofstream outputPath("Rezult/Compiled_" + code[0] + "_" +
-                                 codePath.filename().string());
+        std::ofstream outputPath(outputDirectory + "/Compiled_" + code[0] +
+                                 "_" + codePath.filename().string());
         for (ForcedLineStatement const& line : lines) {
             outputPath << line.ToString() << '\n';
         }
