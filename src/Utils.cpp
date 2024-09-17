@@ -50,3 +50,18 @@ std::vector<std::string> Utils::ReadFileContents(std::string const filePath) {
     contents.pop_back();
     return contents;
 }
+
+uint8_t Utils::ReverseBits(uint8_t x, int width) {
+    uint8_t out = 0;
+
+    for (int i = 0; i < width; i++) {
+        out <<= 1;
+        if (x & 1) {
+            out ^= 1;
+        }
+
+        x >>= 1;
+    }
+
+    return out;
+}
