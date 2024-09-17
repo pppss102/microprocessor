@@ -10,8 +10,8 @@ int main(int argc, char** argv) {
         return 0;
     }
 
-    ProcessorLanguageInterpreter interpreter;
-    interpreter.CompileCode(argv[1], argv[2]);
+    // ProcessorLanguageInterpreter interpreter;
+    // interpreter.CompileCode(argv[1], argv[2]);
 
     return 0;
 }
