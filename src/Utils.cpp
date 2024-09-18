@@ -5,7 +5,24 @@
 #include <string>
 #include <vector>
 
-std::vector<std::string> Utils::split(std::string const& line,
+std::string Utils::Trim(std::string const& str,
+                        std::function<bool(char)> const& trimmable,
+                        Utils::TrimSettings settings) {
+    bool left = settings == Utils::TrimSettings::TrimBothEnds;
+    bool right = left;
+    left |= settings == Utils::TrimSettings::TrimLeft;
+    right |= settings == Utils::TrimSettings::TrimRight;
+
+    auto left_it = left ? std::find_if_not(str.begin(), str.end(), trimmable)
+                        : str.begin();
+    auto right_it =
+        right ? std::find_if_not(str.rbegin(), str.rend(), trimmable).base()
+              : str.rbegin().base();
+
+    return std::string(left_it, right_it);
+}
+
+std::vector<std::string> Utils::Split(std::string const& line,
                                       std::string const& delimeter) {
     std::vector<std::string> parts = {};
 
