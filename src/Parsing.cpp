@@ -1,5 +1,6 @@
 #include "Parsing.h"
 #include "FlatMap.h"
+#include <stdexcept>
 
 using namespace Parsing;
 
