@@ -53,14 +53,14 @@ enum class ParsingResult {
 };
 
 class ParsingException : public std::exception {
-    ParsingResult const result;
+    std::string const explain;
 
   public:
-    ParsingException(ParsingResult result) : result{result} {}
+    ParsingException(std::string const& explain) : explain{explain} {}
     char const* what() const noexcept override;
 };
 
-std::pair<uint16_t, Command> ParseCommandString(std::string const& str);
+std::pair<uint8_t, Command> ParseCommandString(std::string const& str);
 
 } // namespace Parsing
 
