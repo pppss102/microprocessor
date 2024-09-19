@@ -10,18 +10,16 @@ enum class TrimSettings {
     TrimBothEnds,
 };
 
-std::string Trim(std::string const& str,
-                 std::function<bool(char)> const& trimmable,
+std::string Trim(std::string const& str, std::string const& trimmable,
                  TrimSettings settings);
 
 bool IsPositiveNumber(std::string const& s);
 
 std::vector<std::string> Split(std::string const& line,
-                               std::string const& delimeter);
+                               std::string const& delimiter);
 
-std::string BoolArrayToString(bool const arr[], int length);
-
-void AssignIntToBoolArray(bool arr[], int length, int number);
+std::vector<std::string> Split(std::string const& line,
+                               std::vector<char> const& delimiters);
 
 std::vector<std::string> ReadFileContents(std::string const filePath);
 

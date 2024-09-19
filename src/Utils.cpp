@@ -5,18 +5,21 @@
 #include <string>
 #include <vector>
 
-std::string Utils::Trim(std::string const& str,
-                        std::function<bool(char)> const& trimmable,
+std::string Utils::Trim(std::string const& str, std::string const& trimmable,
                         Utils::TrimSettings settings) {
     bool left = settings == Utils::TrimSettings::TrimBothEnds;
     bool right = left;
     left |= settings == Utils::TrimSettings::TrimLeft;
     right |= settings == Utils::TrimSettings::TrimRight;
 
-    auto left_it = left ? std::find_if_not(str.begin(), str.end(), trimmable)
+    auto is_trimmable = [&](char c) {
+        return trimmable.find(c) != std::string::npos;
+    };
+
+    auto left_it = left ? std::find_if_not(str.begin(), str.end(), is_trimmable)
                         : str.begin();
     auto right_it =
-        right ? std::find_if_not(str.rbegin(), str.rend(), trimmable).base()
+        right ? std::find_if_not(str.rbegin(), str.rend(), is_trimmable).base()
               : str.rbegin().base();
 
     return std::string(left_it, right_it);
@@ -29,16 +32,20 @@ bool Utils::IsPositiveNumber(std::string const& s) {
 }
 
 std::vector<std::string> Utils::Split(std::string const& line,
-                                      std::string const& delimeter) {
+                                      std::string const& delimiter) {
     std::vector<std::string> parts = {};
 
-    std::size_t pos = line.find(delimeter);
+    std::size_t pos = line.find(delimiter);
     std::size_t start = 0;
 
     while (pos != std::string::npos) {
-        parts.push_back(line.substr(start, pos - start));
-        start = pos + delimeter.length();
-        pos = line.find(delimeter, pos + 1);
+        auto const part = line.substr(start, pos - start);
+        if (!part.empty()) {
+            parts.push_back(part);
+        }
+
+        start = pos + delimiter.length();
+        pos = line.find(delimiter, start);
     }
 
     parts.push_back(line.substr(start));
@@ -46,19 +53,25 @@ std::vector<std::string> Utils::Split(std::string const& line,
     return parts;
 }
 
-std::string Utils::BoolArrayToString(bool const arr[], int length) {
-    std::string result = "";
-    for (int i = 0; i < length; i++) {
-        result += std::to_string(arr[i]);
-    }
-    return result;
-}
+std::vector<std::string> Split(std::string const& line,
+                               std::vector<char> const& delimiters) {
+    std::vector<std::string> parts = {};
+    std::string const delimiter(delimiters.begin(), delimiters.end());
 
-void Utils::AssignIntToBoolArray(bool arr[], int length, int number) {
-    for (int i = length - 1; i >= 0; i--) {
-        arr[i] = number % 2;
-        number /= 2;
+    std::size_t pos = line.find_first_of(delimiter);
+    std::size_t start = 0;
+
+    while (pos != std::string::npos) {
+        auto const part = line.substr(start, pos - start);
+        if (!part.empty()) {
+            parts.push_back(part);
+        }
+
+        start = pos + 1;
+        pos = line.find_first_of(delimiter, start);
     }
+
+    parts.push_back(line.substr(start));
 }
 
 std::vector<std::string> Utils::ReadFileContents(std::string const filePath) {
