@@ -39,6 +39,24 @@ FlatMap<std::string, Operand> const str_operand({
 });
 #pragma endregion
 
+std::variant<Operand, uint8_t> GetOperand(std::string const& str) {
+    if (Utils::IsPositiveNumber(str)) {
+        int value = std::stoi(str);
+        if (value < 1 || value > 15) {
+            throw std::logic_error("Integers for flag checking should "
+                                   "be in the range 1-15");
+        }
+
+        return static_cast<uint8_t>(value);
+    }
+    auto value = str_operand.Find(str);
+    if (!value.has_value()) {
+        throw std::logic_error("Unknown operand " + str);
+    }
+
+    return *value;
+}
+
 std::pair<uint8_t, Command>
 Parsing::ParseCommandString(std::string const& str) {
     auto labeled_command = Utils::Split(str, ":");
@@ -78,25 +96,7 @@ Parsing::ParseCommandString(std::string const& str) {
         operation.operation = *op;
 
         for (int j = 1; j < queries[i].size(); j++) {
-            std::variant<Operand, uint8_t> operand;
-            if (Utils::IsPositiveNumber(queries[i][j])) {
-                int value = std::stoi(queries[i][j]);
-                if (value < 1 || value > 15) {
-                    throw std::logic_error("Integers for flag checking should "
-                                           "be in the range 1-15");
-                }
-
-                operand = static_cast<uint8_t>(value);
-            } else {
-                auto value = str_operand.Find(queries[i][j]);
-                if (!value.has_value()) {
-                    throw std::logic_error("Unknown operand " + queries[i][j]);
-                }
-
-                operand = *value;
-            }
-
-            operation.operands.push_back(operand);
+            operation.operands.push_back(GetOperand(queries[i][j]));
         }
         i++;
     }
