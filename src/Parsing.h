@@ -41,24 +41,10 @@ enum class Operand {
 
 struct CommandEntry {
     Operation operation;
-    std::vector<std::variant<Operand, uint16_t>> operands;
+    std::vector<std::variant<Operand, uint8_t>> operands;
 };
 
 using Command = std::vector<CommandEntry>;
-
-enum class ParsingResult {
-    Ok,
-    MultipleColons,
-    IncorrectLabel,
-};
-
-class ParsingException : public std::exception {
-    std::string const explain;
-
-  public:
-    ParsingException(std::string const& explain) : explain{explain} {}
-    char const* what() const noexcept override;
-};
 
 std::pair<uint8_t, Command> ParseCommandString(std::string const& str);
 
