@@ -11,13 +11,11 @@
 template <typename _Key, typename _Value> class FlatMap {
     using kv = std::pair<_Key, _Value>;
     std::vector<kv> data;
-
-    static auto comparator = [](kv const& lhs, kv const& rhs) {
-        return lhs.first < lhs.first;
-    };
+    std::function<bool(kv, kv)> comparator;
 
   public:
-    FlatMap(std::initializer_list<kv> list) const {
+    FlatMap(std::initializer_list<kv> list) {
+        comparator = [](kv lhs, kv rhs) { return lhs.first < rhs.first; };
         data.resize(list.size());
         std::copy(list.begin(), list.end(), data.begin());
 
@@ -25,8 +23,11 @@ template <typename _Key, typename _Value> class FlatMap {
     }
 
     std::optional<_Value> Find(_Key key) const {
-        auto it = std::lower_bound(data.begin(), data.end(), comparator);
-        return (it == data.end()) ? std::nullopt : it->second;
+        kv entry = {key, _Value()};
+        auto it = std::lower_bound(data.begin(), data.end(), entry, comparator);
+        return (it == data.end() || it->first != key)
+                   ? std::nullopt
+                   : std::optional<_Value>{it->second};
     }
 };
 
