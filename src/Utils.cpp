@@ -53,8 +53,8 @@ std::vector<std::string> Utils::Split(std::string const& line,
     return parts;
 }
 
-std::vector<std::string> Split(std::string const& line,
-                               std::vector<char> const& delimiters) {
+std::vector<std::string> Utils::Split(std::string const& line,
+                                      std::vector<char> const& delimiters) {
     std::vector<std::string> parts = {};
     std::string const delimiter(delimiters.begin(), delimiters.end());
 
