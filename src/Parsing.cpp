@@ -39,6 +39,20 @@ FlatMap<std::string, Operand> const str_operand({
 });
 #pragma endregion
 
+std::vector<std::vector<std::string>>
+GetQueries(std::vector<std::string> const& operations) {
+    std::vector<std::vector<std::string>> queries(operations.size());
+    for (int i = 0; auto& query : queries) {
+        query = Utils::Split(operations[i], std::vector{' ', ',', '\t'});
+        for (auto& part : query) {
+            part = Utils::Trim(part, " ,\t", Utils::TrimSettings::TrimBothEnds);
+        }
+        i++;
+    }
+
+    return queries;
+}
+
 std::variant<Operand, uint8_t> GetOperand(std::string const& str) {
     if (Utils::IsPositiveNumber(str)) {
         int value = std::stoi(str);
@@ -77,14 +91,7 @@ Parsing::ParseCommandString(std::string const& str) {
     uint8_t index = rawIndex;
 
     auto operations = Utils::Split(labeled_command[1], "&&");
-    std::vector<std::vector<std::string>> queries(operations.size());
-    for (int i = 0; auto& query : queries) {
-        query = Utils::Split(operations[i], std::vector{' ', ',', '\t'});
-        for (auto& part : query) {
-            part = Utils::Trim(part, " ,\t", Utils::TrimSettings::TrimBothEnds);
-        }
-        i++;
-    }
+    std::vector<std::vector<std::string>> queries = GetQueries(operations);
 
     Command command(operations.size());
     for (int i = 0; auto& operation : command) {
