@@ -1,5 +1,5 @@
 #include "ForcedCommand.h"
-#include "../Utils.h"
+#include "Utils.h"
 #include <sstream>
 
 ForcedCommand::Command::Command() {
