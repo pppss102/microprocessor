@@ -72,6 +72,8 @@ std::vector<std::string> Utils::Split(std::string const& line,
     }
 
     parts.push_back(line.substr(start));
+
+    return parts;
 }
 
 std::vector<std::string> Utils::ReadFileContents(std::string const filePath) {
