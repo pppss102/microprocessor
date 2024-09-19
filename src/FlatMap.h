@@ -2,7 +2,9 @@
 #define __FLAT_MAP_H
 
 #include <algorithm>
+#include <functional>
 #include <initializer_list>
+#include <optional>
 #include <utility>
 #include <vector>
 
