@@ -14,6 +14,8 @@ std::string Trim(std::string const& str,
                  std::function<bool(char)> const& trimmable,
                  TrimSettings settings);
 
+bool IsPositiveNumber(std::string const& s);
+
 std::vector<std::string> Split(std::string const& line,
                                std::string const& delimeter);
 

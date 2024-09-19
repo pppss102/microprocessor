@@ -22,6 +22,12 @@ std::string Utils::Trim(std::string const& str,
     return std::string(left_it, right_it);
 }
 
+bool Utils::IsPositiveNumber(std::string const& s) {
+    return s.size() && std::find_if_not(s.begin(), s.end(), [](char c) {
+                           return isdigit(c);
+                       }) == s.end();
+}
+
 std::vector<std::string> Utils::Split(std::string const& line,
                                       std::string const& delimeter) {
     std::vector<std::string> parts = {};
