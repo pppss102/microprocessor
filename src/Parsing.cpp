@@ -56,9 +56,8 @@ GetQueries(std::vector<std::string> const& operations) {
 std::variant<Operand, uint8_t> GetOperand(std::string const& str) {
     if (Utils::IsPositiveNumber(str)) {
         int value = std::stoi(str);
-        if (value < 1 || value > 15) {
-            throw std::logic_error("Integers for flag checking should "
-                                   "be in the range 1-15");
+        if (value < 0 || value > 255) {
+            throw std::logic_error("Integers should be in the range 0-255");
         }
 
         return static_cast<uint8_t>(value);
