@@ -48,7 +48,10 @@ std::vector<std::string> Utils::Split(std::string const& line,
         pos = line.find(delimiter, start);
     }
 
-    parts.push_back(line.substr(start));
+    auto const part = line.substr(start);
+    if (!part.empty()) {
+        parts.push_back(part);
+    }
 
     return parts;
 }
@@ -71,7 +74,10 @@ std::vector<std::string> Utils::Split(std::string const& line,
         pos = line.find_first_of(delimiter, start);
     }
 
-    parts.push_back(line.substr(start));
+    auto const part = line.substr(start);
+    if (!part.empty()) {
+        parts.push_back(part);
+    }
 
     return parts;
 }
