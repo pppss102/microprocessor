@@ -1,4 +1,5 @@
 #pragma once
+#include <cstdint>
 #include <functional>
 #include <string>
 #include <vector>
@@ -16,10 +17,12 @@ std::string Trim(std::string const& str, std::string const& trimmable,
 bool IsPositiveNumber(std::string const& s);
 
 std::vector<std::string> Split(std::string const& line,
-                               std::string const& delimiter);
+                               std::string const& delimiter,
+                               bool add_empty = false);
 
 std::vector<std::string> Split(std::string const& line,
-                               std::vector<char> const& delimiters);
+                               std::vector<char> const& delimiters,
+                               bool add_empty = false);
 
 std::vector<std::string> ReadFileContents(std::string const filePath);
 

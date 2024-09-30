@@ -32,7 +32,8 @@ bool Utils::IsPositiveNumber(std::string const& s) {
 }
 
 std::vector<std::string> Utils::Split(std::string const& line,
-                                      std::string const& delimiter) {
+                                      std::string const& delimiter,
+                                      bool add_empty) {
     std::vector<std::string> parts = {};
 
     std::size_t pos = line.find(delimiter);
@@ -40,7 +41,7 @@ std::vector<std::string> Utils::Split(std::string const& line,
 
     while (pos != std::string::npos) {
         auto const part = line.substr(start, pos - start);
-        if (!part.empty()) {
+        if (!add_empty && !part.empty()) {
             parts.push_back(part);
         }
 
@@ -57,7 +58,8 @@ std::vector<std::string> Utils::Split(std::string const& line,
 }
 
 std::vector<std::string> Utils::Split(std::string const& line,
-                                      std::vector<char> const& delimiters) {
+                                      std::vector<char> const& delimiters,
+                                      bool add_empty) {
     std::vector<std::string> parts = {};
     std::string const delimiter(delimiters.begin(), delimiters.end());
 
@@ -66,7 +68,7 @@ std::vector<std::string> Utils::Split(std::string const& line,
 
     while (pos != std::string::npos) {
         auto const part = line.substr(start, pos - start);
-        if (!part.empty()) {
+        if (!add_empty && !part.empty()) {
             parts.push_back(part);
         }
 
